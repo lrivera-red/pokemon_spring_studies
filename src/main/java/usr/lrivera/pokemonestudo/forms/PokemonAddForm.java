@@ -1,17 +1,13 @@
-package usr.lrivera.pokemonestudo.entities;
+package usr.lrivera.pokemonestudo.forms;
 
-import usr.lrivera.pokemonestudo.forms.PokemonAddForm;
+import usr.lrivera.pokemonestudo.entities.Pokemon;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Entity
-public class Pokemon {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PokemonAddForm {
+    @NotNull
+    @NotEmpty
     private String name_pk;
     private String type_1;
     private String type_2;
@@ -25,42 +21,19 @@ public class Pokemon {
     private Integer generation;
     private Boolean legendary;
 
-    public Pokemon() {
-    }
-
-    public Pokemon(String name_pk,
-                   String type_1,
-                   String type_2,
-                   Double stats_total,
-                   Integer stats_hp,
-                   Integer stats_attack,
-                   Integer stats_defense,
-                   Integer stats_sp_attack,
-                   Integer stats_sp_def,
-                   Integer stats_speed,
-                   Integer generation,
-                   Boolean legendary
-    ) {
-        this.name_pk = name_pk;
-        this.type_1 = type_1;
-        this.type_2 = type_2;
-        this.stats_total = stats_total;
-        this.stats_hp = stats_hp;
-        this.stats_attack = stats_attack;
-        this.stats_defense = stats_defense;
-        this.stats_sp_attack = stats_sp_attack;
-        this.stats_sp_def =stats_sp_def;
-        this.stats_speed = stats_speed;
-        this.generation = generation;
-        this.legendary = legendary;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Pokemon converter() {
+        return new Pokemon(name_pk,
+                type_1,
+                type_2,
+                stats_total,
+                stats_hp,
+                stats_attack,
+                stats_defense,
+                stats_sp_attack,
+                stats_sp_def,
+                stats_speed,
+                generation,
+                legendary);
     }
 
     public String getName_pk() {
