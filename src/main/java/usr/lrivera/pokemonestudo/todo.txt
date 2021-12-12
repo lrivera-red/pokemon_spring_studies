@@ -1,0 +1,3 @@
+comparação de status;
+remoção de pokemon;
+inserção de pokemon;(possivelmente linkada a evolução
