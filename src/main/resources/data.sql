@@ -13,4 +13,7 @@ INSERT INTO Pokemon(
     legendary
 )
 SELECT *
-FROM CSVRead('D:\Documentos\Java-estudos\pokemon-estudo\src\main\resources\pokemon.csv');
+FROM CSVRead('/home/lrivera/ProjetosPessoais/pokemon_spring_studies/src/main/resources/pokemon.csv');
+
+
+INSERT INTO USUARIO(nome, email, senha) VALUES('Administrador', 'admin@email.com', '$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq');

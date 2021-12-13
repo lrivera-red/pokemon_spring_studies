@@ -8,6 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import usr.lrivera.pokemonestudo.dto.PokemonDTO;
 import usr.lrivera.pokemonestudo.dto.PokemonDetalhadoDTO;
 import usr.lrivera.pokemonestudo.entities.Pokemon;
+import usr.lrivera.pokemonestudo.forms.FormAtualizacao;
 import usr.lrivera.pokemonestudo.forms.PokemonAddForm;
 import usr.lrivera.pokemonestudo.repository.PokemonRepository;
 //import usr.lrivera.pokemonestudo.repository.PokemonRepository;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/pokemon")
-public class ConsultaController {
+public class PokemonController {
 
     @Autowired
     private PokemonRepository pokemonRepository;
@@ -39,5 +40,22 @@ public class ConsultaController {
         pokemonRepository.save(pokemon);
         URI uri = uriComponentsBuilder.path("/pokemon/{id}").buildAndExpand(pokemon.getId()).toUri();
         return ResponseEntity.created(uri).body(new PokemonDetalhadoDTO(pokemon));
+    }
+    @PutMapping("/{id}")
+    public  ResponseEntity<PokemonDetalhadoDTO> update(@PathVariable Long id, @RequestBody FormAtualizacao att){
+        if(pokemonRepository.findById(id).isPresent()){
+            Pokemon pokemon = att.atualizacao(pokemonRepository,id);
+            return ResponseEntity.ok(new PokemonDetalhadoDTO(pokemon));
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletar (@PathVariable Long id){
+        if(pokemonRepository.findById(id).isPresent()){
+            pokemonRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
