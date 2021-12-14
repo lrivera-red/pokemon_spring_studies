@@ -35,3 +35,7 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+bootJar {
+	baseName = "PokemonEstudoApplication"
+	version =  '0.0.1'
+}
