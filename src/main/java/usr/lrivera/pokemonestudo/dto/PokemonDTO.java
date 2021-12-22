@@ -12,7 +12,7 @@ public class PokemonDTO {
 
     public PokemonDTO(Pokemon pokemon) {
         this.id = pokemon.getId();
-        this.name = pokemon.getName_pk();
+        this.name = pokemon.getName();
         this.geracao = pokemon.getGeneration();
     }
 

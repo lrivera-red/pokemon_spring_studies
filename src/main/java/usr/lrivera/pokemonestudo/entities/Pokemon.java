@@ -1,7 +1,5 @@
 package usr.lrivera.pokemonestudo.entities;
 
-import usr.lrivera.pokemonestudo.forms.PokemonAddForm;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,7 @@ public class Pokemon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name_pk;
+    private String name;
     private String type_1;
     private String type_2;
     private Double stats_total;
@@ -28,7 +26,7 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(String name_pk,
+    public Pokemon(String name,
                    String type_1,
                    String type_2,
                    Double stats_total,
@@ -41,7 +39,7 @@ public class Pokemon {
                    Integer generation,
                    Boolean legendary
     ) {
-        this.name_pk = name_pk;
+        this.name = name;
         this.type_1 = type_1;
         this.type_2 = type_2;
         this.stats_total = stats_total;
@@ -63,12 +61,12 @@ public class Pokemon {
         this.id = id;
     }
 
-    public String getName_pk() {
-        return name_pk;
+    public String getName() {
+        return name;
     }
 
-    public void setName_pk(String name_pk) {
-        this.name_pk = name_pk;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType_1() {

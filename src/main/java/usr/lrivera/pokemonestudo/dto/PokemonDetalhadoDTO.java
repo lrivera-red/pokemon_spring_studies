@@ -18,7 +18,7 @@ public class PokemonDetalhadoDTO {
     private Boolean lendario;
 
     public PokemonDetalhadoDTO(Pokemon pokemon) {
-        this.nome = pokemon.getName_pk();
+        this.nome = pokemon.getName();
         this.id = pokemon.getId();
         this.tipo1 = pokemon.getType_1();
         this.tipo2 = pokemon.getType_2();
