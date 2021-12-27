@@ -1,0 +1,12 @@
+//    @PostMapping("/compare")
+//    public ResponseEntity<PokemonDetalhadoDTO> comparar(@RequestBody ArrayList<Long> longList) {
+//        try {Map<String, Double> hashMap = new HashMap<>();
+//            longList
+//                    .forEach((i -> pokemonRepository.findById(i).ifPresent(pokemon -> hashMap.put(pokemon.getNamepk(), pokemon.getStats_total()))));
+//            String key = Collections.max(hashMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+//            Pokemon pokemon = pokemonRepository.findByNamepk(key);
+//            return ResponseEntity.ok(new PokemonDetalhadoDTO(pokemon));
+//        } catch (NoSuchElementException ex) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
