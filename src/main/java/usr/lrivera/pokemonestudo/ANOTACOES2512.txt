@@ -1,0 +1,23 @@
+1. Como tratar o headers de uma request
+Visão simples que eu tinha a princípio ,confundia Header com Param,
+mas aí percebi que näo tinha nenhuma relação.
+Não entrei em detalhes das funcionalidades da maioria dos Headers. 
+Até separei uma documentação com vários tipos de cabeçalho, mas ainda não li
+No entanto, vi alguns importantes como Authorization, Host, Content-Type, User-Agent, Accept-Language(Idioma),  
+X-Forwarded-For(RECEBER IP
+IP white list?
+2. Como validar o payload (body) de uma request.
+Pelo que eu entendi até agora, algumas bibliotecas facilitam a validação, por exemplo, na minha aplicação tem um form que eu estou usando Javax validation pra evitar que ele venha vazio. Nisso eu vi algo mais interessante ainda que é a 
+anotação @Pattern que eu ainda não usei muito, comecei a aprender agora sobre regex. Mas vi alguns exemplos de como é usada pra validar documentos como CPF e afins.
+3. Utilização do Controller Advice
+ @ExceptionHandler, @InitBinder, or @ModelAttribute
+
+@ExceptionHandler ->>> Centralizar no Controller Advice o controle da exceptions
+
+https://reflectoring.io/spring-boot-exception-handling/
+
+4. Redirect de um endpoint para outro.
+https://www.baeldung.com/spring-redirect-and-forward
+
+Redirect(Cliente faz duas requests)=> lento porém se o escopo for mudar completamente, pode ser viável. E Forward(Server side) => mais rápido, indicado para relacionar lógica com o armazenamento dela na própria aplicação.
+NO SPRING : Redirect and View or ModelAndView(pode usar redirect ou forward)

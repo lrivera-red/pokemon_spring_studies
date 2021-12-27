@@ -2,6 +2,8 @@ package usr.lrivera.pokemonestudo.dto;
 
 import usr.lrivera.pokemonestudo.entities.Pokemon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,5 +32,8 @@ public class PokemonDTO {
 
     public static List<PokemonDTO> converterPokemon(List<Pokemon> pokemons){
         return pokemons.stream().map(PokemonDTO::new).collect(Collectors.toList());
+    }
+    public static List<PokemonDTO> converterPokemonFromHeader(Pokemon pokemon){
+        return List.of(new PokemonDTO(pokemon));
     }
 }

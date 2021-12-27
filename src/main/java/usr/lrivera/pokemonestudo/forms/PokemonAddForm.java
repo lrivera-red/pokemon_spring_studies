@@ -1,9 +1,10 @@
 package usr.lrivera.pokemonestudo.forms;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 import usr.lrivera.pokemonestudo.entities.Pokemon;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 public class PokemonAddForm {
     @NotNull
@@ -11,6 +12,9 @@ public class PokemonAddForm {
     private String name_pk;
     private String type_1;
     private String type_2;
+    @NotNull
+    @Max(999)
+    @Min(0)
     private Double stats_total;
     private Integer stats_hp;
     private Integer stats_attack;
@@ -22,7 +26,8 @@ public class PokemonAddForm {
     private Boolean legendary;
 
     public Pokemon converter() {
-        return new Pokemon(name_pk,
+        return new Pokemon(
+                name_pk,
                 type_1,
                 type_2,
                 stats_total,
@@ -33,7 +38,8 @@ public class PokemonAddForm {
                 stats_sp_def,
                 stats_speed,
                 generation,
-                legendary);
+                legendary
+        );
     }
 
     public String getName_pk() {

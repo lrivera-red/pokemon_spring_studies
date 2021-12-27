@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import usr.lrivera.pokemonestudo.repository.UsuarioRepository;
 
 //principal configuração de securaça SpringSecurity
@@ -28,11 +29,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private SecurityDetailsService securityDetailsService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         //Autorizacao
         http.authorizeHttpRequests()
                 .antMatchers(HttpMethod.GET,"/pokemon").permitAll()//Permitir verbo Get nesse url
                 .antMatchers(HttpMethod.GET,"/pokemon/*").permitAll()//Idem
                 .antMatchers(HttpMethod.POST,"/auth").permitAll()//Permitir verbo Post nesse url
+                .antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()//Qualquer outra request-> autenticado
                 .and().csrf().disable()//Desabilitar A Config Padrão de segurança do SpringBoot-> Uso de classe customizada
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Sessão Stateless por Token JWT
