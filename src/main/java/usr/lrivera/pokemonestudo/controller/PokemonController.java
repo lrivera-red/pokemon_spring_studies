@@ -1,6 +1,8 @@
 package usr.lrivera.pokemonestudo.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +34,13 @@ public class PokemonController {
     private PokemonIPTrackingService pokemonIPTrackingService;
     @Autowired
     private PokemonRepository pokemonRepository;
-
+    private static final Logger log = LoggerFactory.getLogger(PokemonController.class);
     @GetMapping
     public List<PokemonDTO> listaCompleta(@RequestHeader HttpHeaders headers) {
+        headers.getOrigin();
         String idOptional = headers.getFirst("id");
         if (idOptional!=null) {
+            log.info("Request geral");
             return PokemonDTO.converterPokemonFromHeader(pokemonRepository.findById(Long.valueOf(idOptional)).get());
         }
         List<Pokemon> pokemons = pokemonRepository.findAll();
