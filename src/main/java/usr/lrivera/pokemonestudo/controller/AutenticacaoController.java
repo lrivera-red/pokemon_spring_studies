@@ -1,5 +1,7 @@
 package usr.lrivera.pokemonestudo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 public class AutenticacaoController {
+    private static final Logger LOG = LoggerFactory.getLogger(AutenticacaoController.class);
     @Autowired
     private AuthenticationManager authManager;
 
@@ -30,6 +33,7 @@ public class AutenticacaoController {
        try {
            Authentication authentication = authManager.authenticate(dadosLogin);
            String token = tokenService.gerarToken(authentication);
+           LOG.info("Solicitação de autenticação realizada por {}",dadosLogin.getName());
            return ResponseEntity.ok(new TokenDto(token,"Bearer"));
        }
        catch (AuthenticationException ex){
