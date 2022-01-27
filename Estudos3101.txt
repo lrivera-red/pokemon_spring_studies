@@ -1,0 +1,7 @@
+Realizar testes de rede com dois (2) containers. Conexão, desconexão, mudança ip, etc...
+Dockerfile: construir uma image baseada em linux alpine (raw), instalar as dependencias da aplicação e executar.
+Dockercompose: realizar testes com apache + imagem da app.
+Realizar teste de header (sleuth) com o webhook.site +- adaptar request para carregar o span
+Logback (json) +-
+Gradle:  listar tasks / rodar / executar testes / executar task customizada / export app (jar) em linha comando a app
+Testes: given, when, then
