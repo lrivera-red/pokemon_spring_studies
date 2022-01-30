@@ -17,7 +17,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
+import usr.lrivera.pokemonestudo.controller.services.HeaderEnrichService;
 import usr.lrivera.pokemonestudo.controller.services.PokemonIPTrackingService;
+import usr.lrivera.pokemonestudo.controller.services.TraceService;
+import usr.lrivera.pokemonestudo.controller.services.WebClientService;
 import usr.lrivera.pokemonestudo.dto.PokemonDTO;
 import usr.lrivera.pokemonestudo.dto.PokemonDetalhadoDTO;
 import usr.lrivera.pokemonestudo.entities.Pokemon;
@@ -37,30 +40,35 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/pokemon")
 public class PokemonController {
-    HttpClient httpClient = HttpClient.create()
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-            .responseTimeout(Duration.ofMillis(5000))
-            .doOnConnected(conn ->
-                    conn.addHandlerLast(new ReadTimeoutHandler(5000, TimeUnit.MILLISECONDS))
-                            .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS)));
+    @Autowired
+    WebClientService webClientService;
+    @Autowired
+    private TraceService traceService;
+    @Autowired
+    private HeaderEnrichService headerEnrichService;
     @Autowired
     private PokemonIPTrackingService pokemonIPTrackingService;
     @Autowired
     private PokemonRepository pokemonRepository;
-    private static final Logger log = LoggerFactory.getLogger(PokemonController.class);
+    private static final Logger log = LoggerFactory.getLogger("STDOUT");
     private static final Logger jsonlog = LoggerFactory.getLogger("jsonLogger");
     @GetMapping
-    public List<PokemonDTO> listaCompleta(@RequestHeader HttpHeaders headers) {
-        WebClient webClient = WebClient.builder().baseUrl("https://webhook.site/d30dec1b-2f5c-4f09-98a8-eee7e74794ba").defaultHeaders().clientConnector(new ReactorClientHttpConnector(httpClient)).build();
-       String response = webClient.get().retrieve().bodyToMono(String.class).block();
+    public List<PokemonDTO> listaCompleta(@RequestHeader HttpHeaders headers, HttpServletRequest httpServletRequest) {
+        WebClient webClient = webClientService.webClientBuilder(traceService);
+       String response = webClient.
+               get().
+               retrieve().
+               bodyToMono(String.class).
+               block();
        log.info(response);
+       log.info("Request realizada pelo ip = {}",pokemonIPTrackingService.getIpRequestAndUser(httpServletRequest));
        headers.getOrigin();
         String idOptional = headers.getFirst("id");
         if (idOptional!=null) {
-            log.info("Request geral aaaaaaaaaaaaaaaa");
-            jsonlog.info("Request aaaaaaaaaaaaaaa");
             return PokemonDTO.converterPokemonFromHeader(pokemonRepository.findById(Long.valueOf(idOptional)).get());
         }
+        log.info("Request geral");
+        jsonlog.info("Json request geral");
         List<Pokemon> pokemons = pokemonRepository.findAll();
         return PokemonDTO.converterPokemon(pokemons);
     }

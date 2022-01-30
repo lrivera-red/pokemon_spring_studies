@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+
+  pokemonapp:
+    container_name: pokemon_application
+    image: lriverared/pokemon-application-01
+    ports:
+    - "4321:4321"
+  apache:
+    container_name: apache01
+    image: httpd:latest
+    ports:
+      - "8080:8080"
+
+
+
+
